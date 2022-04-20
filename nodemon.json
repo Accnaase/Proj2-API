@@ -1,0 +1,11 @@
+{
+    "env": {
+        "MYQl_USER": "thiago",
+        "MYSQL_PASSWORD" : "Thiago@159753",
+        "MYSQL_DATABASE" : "vagas",
+        "MYSQL_HOST" : "localhost",
+        "MYSQL_PORT" : 3306,
+
+        "JWT_KEY" : "segredo"
+    }
+}
