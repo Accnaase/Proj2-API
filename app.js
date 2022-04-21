@@ -3,9 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-// const rotaProdutos = require('./routes/produtos');
-// const rotaPedidos= require('./routes/pedidos');
-// const rotaUsuarios = require('./routes/usuarios');
+const rotaEmpresas = require('./routes/empresas');
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -28,7 +26,7 @@ app.use((req, res, next) => {
 
 // app.use('/pedidos',rotaPedidos);
 // app.use('/produtos', rotaProdutos);
-// app.use('/usuarios', rotaUsuarios);
+app.use('/empresas', rotaEmpresas);
 
 app.use((req, res, next) => {
     const erro = new Error('Não encontrado');
