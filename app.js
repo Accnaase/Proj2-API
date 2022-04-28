@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const rotaEmpresas = require('./routes/empresas');
+const rotaVagas = require('./routes/vagas');
+const rotaUsuarios = require('./routes/usuarios');
+const rotaCandidatos = require('./routes/candidatos');
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -24,9 +27,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.use('/pedidos',rotaPedidos);
-// app.use('/produtos', rotaProdutos);
 app.use('/empresas', rotaEmpresas);
+app.use('/vagas', rotaVagas);
+app.use('/usuarios', rotaUsuarios);
+app.use('/candidatos', rotaCandidatos);
 
 app.use((req, res, next) => {
     const erro = new Error('Não encontrado');
@@ -43,6 +47,5 @@ app.use((error,req,res,next)=>{
         }
     });
 });
-
 
 module.exports = app;
