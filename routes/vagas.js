@@ -5,7 +5,7 @@ const VagasController = require('../controllers/vagas_controller')
 // METODO GET ALL
 router.get('/', VagasController.getVagas);
 //METODO POST
-router.post('/cadastro', VagasController.postVagas);
+router.post('/', VagasController.postVagas);
 //METODO GET ID
 router.get('/:id_vaga', VagasController.getVagasId);
 //METODO PATCH

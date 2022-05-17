@@ -7,25 +7,15 @@ const rotaEmpresas = require('./routes/empresas');
 const rotaVagas = require('./routes/vagas');
 const rotaUsuarios = require('./routes/usuarios');
 const rotaCandidatos = require('./routes/candidatos');
+const cors = require('cors');
+
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-        'Access-Control-Allow-Header',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    );
+app.use(cors({origin: '*'}));
 
-    if(req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        return res.status(200).send({});
-    };
-
-    next();
-});
 
 app.use('/empresas', rotaEmpresas);
 app.use('/vagas', rotaVagas);

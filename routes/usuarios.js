@@ -3,6 +3,7 @@ const router = express.Router();
 const UsuariosController = require('../controllers/usuarios_controller');
 const login = require('../middleware/login')
 
+
 //GET ALL 
 router.get('/', UsuariosController.getUsuarios);
 

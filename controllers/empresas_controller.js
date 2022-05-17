@@ -1,5 +1,49 @@
 const mysql = require('../mysql');
 
+exports.getVagasDeUmaEmpresa = async(req,res,next) => {
+    try {
+        const query = `
+        SELECT   emp.nome, 
+                    emp.id_empresa, 
+                    vag.titulo, 
+                    vag.salario, 
+                    vag.descricao
+            FROM    empresas AS emp
+            JOIN    vagas AS vag
+            ON    vag.fk_id_empresa = emp.id_empresa AND vag.fk_id_empresa = ?;`;
+        const result = await mysql.execute(query, [req.params.id_empresa]);
+        if(result.lenght == 0){
+            return res.status(404).send({
+                message: 'Não existe empresa com esse ID.'
+            });
+        }
+
+        const response = {
+            quantidade: result.lenght,
+            empresa: {
+                nome: result[0].nome,
+                id_empresa: result[0].id_empresa,
+                vagas: result.map(vaga => {
+                    return {
+                        titulo: vaga.titulo,
+                        salario: vaga.salario,
+                        descricao: vaga.descricao,
+                        request: {
+                            type: "GET",
+                            description: "Retorna todas as empresas",
+                            url: "http://localhost/empresas"
+                        }
+                    }
+                })
+            }
+        };
+        return res.status(200).send(response)
+    } catch (error) {
+        return res.status(500).send({ error: error})   
+
+    }
+}
+
 exports.getEmpresas = async(req,res,next) => {
     try {
         const query = `SELECT * FROM empresas`
@@ -58,9 +102,8 @@ exports.postEmpresa = async(req,res,next) => {
         const query = `INSERT INTO empresas (nome) VALUES (?);`
         const result = await mysql.execute(query,
         [
-            req.body.nome
+            req.body.nome,
         ]);
-
             const response = {
                 empresaCriada:{
                     id_empresa: result.insertId,
@@ -74,6 +117,7 @@ exports.postEmpresa = async(req,res,next) => {
             };
             return res.status(201).send( response );
     } catch (error) {
+        console.log(error);
         return res.status(500).send({ error: error})    
     }
 }

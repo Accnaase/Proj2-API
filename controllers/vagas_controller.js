@@ -20,6 +20,7 @@ exports.getVagas = async(req,res,next) => {
             quantidade: result.length,
             vagas: result.map(vaga => {
                 return {
+                    id_vaga: vaga.id_vaga,
                     titulo: vaga.titulo,
                     salario: vaga.salario,
                     descricao: vaga.descricao,
@@ -127,6 +128,8 @@ exports.postVagas = async(req,res,next) => {
         }
         return res.status(201).send( response );
     } catch (error) {
+
+        console.log(error);
         if( error ) { return res.status(500).send({ error: error })};
     }
 }
